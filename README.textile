@@ -1,42 +1,12 @@
-h1. Rails Funda: Bootstrap the Web!
+h1. Vertada
 
-*Rails Funda consists of the latest Rails version with added basic functionality and test library, so you're up and running in no time.*
+*Vertada  - app to store ideas.*
 
-See "lighthouse":http://dovadi.lighthouseapp.com/projects/16557-rails_funda/overview for bugs and feature requests
-
-h2. Download
-
-Github: "Rails_funda":http://github.com/dovadi/rails_funda/tree/master 
-
-h2. Added functionality:
-
-* Restful_authentication with acts_as_state_machine
-* Generation of secret keys (rake funda:generate_secret_keys)
-* Roles with Role_requirement
-* Basis layout with Blueprint
-* Uniq user subdomains with subdomain_fu
-* Local configuration
-* Instant deployment with EC2
-* Admin backend with streamlined
-* etc. etc.
-
-h2. Test libraries
-
-* RSpec on Rails with Rcov
-* Factory Girl
-
-h2. Rails funda on Windows
-
-Rails Funda is tested on windows. You need to have some gems installed locally:
-
-* RSpec: gem install win32console
-* RCov: gem install rcov
-* Selenium: rake test:acceptance, you must: gem install win32-open3
 
 h2. Credits
 
-This project is funded and maintained by "Agile Dovadi BV":http://dovadi.com, contact "Frank Oxener":mailto:frank@dovadi.com
+This project is funded and maintained by "Vertaline":http://vertaline.com, contact "Oleksandr Bondar":mailto:mailbox@vertical-align.com
 
 h2. Licence
 
-Rails Funda is Copyright © 2008 Frank Oxener, Agile Dovadi BV. It is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.
+Vertada is Copyright © 2009 Vertaline. It is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.
