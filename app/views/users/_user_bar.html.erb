@@ -3,7 +3,7 @@
   <div id="user-bar-greeting">Logged in as <%= link_to current_user.login, home_path() %></div>
   <div id="user-bar-action"  >(<%= link_to "Log out", logout_url(), { :title => "Log out" }    %>)</div>
   <%if current_user.has_role?('admin')%>  
-    <div id="user-bar-admin"  ><%= link_to "Administrator &rarr;", {:controller=>"admin/users"}, { :title => "Administrator panel" }%></div>
+    <!--<div id="user-bar-admin"  ><%= link_to "Administrator &rarr;", {:controller=>"admin/users"}, { :title => "Administrator panel" }%></div>-->
   <%end%>  
 <% else -%>
   <div id="user-bar-action"  ><%= link_to "Log in",  login_url(),  { :title => "Log in" } %> /
