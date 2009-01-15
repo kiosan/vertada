@@ -1,0 +1,81 @@
+Localize Ext
+================
+Add simple file based (yml) translation to views, controllers and models.
+
+Configuration
+======= 
+environment.rb
+	LocalizeExt.enable_auto_create = true # define that we should create files with translation on demand
+	LocalizeExt.default_language = 'en' # define default site language
+
+Localization location
+======= 
+	Localization files is located in 'app/localize' path.
+	In this folder you will have folder named as language, and .yml file named as language.
+	File contains global translations, and folder contains files with local translations.
+	
+	Example: 
+		For 'en-US' language we will have 'en-US' folder and 'en-US.yml' file.
+		
+		'en-US.yml' file.
+		
+			Default 'en-US.yml' file is located in templates folder of plugin. 
+			It contains general translations concerning time extension of plugin.
+			You can copy this file to 'app/localize' path and add you global properties.
+		
+		'en-US.yml' folder.
+			This folder will contains local translations of controllers, views and models.
+			Path should be preserved for item, for which local translation is done.
+			
+			For example for 'controllers/user_controller.rb' you should create following translation file:
+			'app/localize/controllers/user_controller.rb.yml'
+			
+			You can localize whole view, by providing it html in appropriate path of 'app/localize' folder.
+			For example for '/app/views/layouts/application.html.erb' you can create localized version of this file 
+			in the path 'app/localize/views/layouts/application.html.erb'.
+			
+	If translation is missing in local translation, then Localization plugin looks for global translation 
+	and if not found - return default value.
+
+Localization  files
+======= 
+	Localization  files	is .yml files that contains translations.
+	Naming of these files described on the upper section.
+	
+	File contains language groups, which contains key symbols with appropriate translations.
+	Language groups is provided for simplifying some translation modules in the future.
+	Currently there are 2 language groups.
+		:translation - general translations language groups
+		:plurals - translation groups, provided for pluralization module. 
+	
+Examples
+======= 
+	Controllers and Views
+	
+		Localization of controllers and views is done via string object in the format: 
+		
+			"Default value"[:key_in_translation_file]
+	
+		This is placed in any place, where you need localized string.
+	
+	Models
+	
+		During models localization where you need avoid caching of model elements,
+		because you mostly need to localize members and not only strings in the code 
+		For this purpose you can use approach of Symbol based localzation: 
+	
+		Example: 
+			validates_acceptance_of :terms,
+			    :message => :accept_terms["Please accept the terms to proceed"]
+		    
+		In this case localization will be performed when object should be converted to string (to_s)
+		and in this time localization module convert symbol to localized string.
+		Format of this localization approach is vice versa to the string format: 
+			
+			:key_in_translation_file["Default value"]
+			
+		In the translation files you can also translate names of fields for model.
+
+		
+			
+	

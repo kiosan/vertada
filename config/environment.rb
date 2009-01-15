@@ -4,7 +4,7 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.1.1' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.2.2' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -34,9 +34,6 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "rubyist-aasm", :lib => "aasm" ,  :source => "http://gems.github.com/"
-  config.gem "spicycode-rcov",:lib=>"rcov", :source => "http://gems.github.com/" unless RUBY_PLATFORM =~ /mswin32/
-  config.gem 'mbleigh-subdomain-fu', :lib => "subdomain-fu", :source => "http://gems.github.com"  
-  config.gem 'thoughtbot-factory_girl', :lib => "factory_girl", :source => "http://gems.github.com"
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -59,7 +56,7 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_rails_funda_session',
+    :session_key => '_vertada_session',
     :secret      => CONFIG[:secret_for_sessions],#'00b09871ac6f25601ec4a6cc5ed28da73d1633a12e3f44a32ab90151c6842bcf46eceb9b37445846ba87c3005b425656c18c8442a53f44b8591f32e1f6db971a'
     :session_domain => CONFIG[:session_domain]
   }
@@ -78,6 +75,10 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector
   config.active_record.observers = :user_observer
 end
+
+
+LocalizeExt.enable_auto_create = false
+require 'rails_hack.rb'
 
 
 

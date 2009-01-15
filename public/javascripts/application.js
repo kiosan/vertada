@@ -23,3 +23,13 @@ LiveValidationFix.Format = Validate.Format;
 Validate.Format = LiveValidationFix.FormatFix;
 
 $j = jQuery.noConflict();
+
+function show_loader(container_id, image ) 
+{ 
+	if (!image) image = 'snake';
+	with($(container_id))
+	{
+		innerHTML = '<img src="/images/'+ image +'.gif" />';
+		show();
+	}
+}

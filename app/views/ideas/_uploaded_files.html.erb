@@ -1,0 +1,7 @@
+<ul>
+  <%files.each do |file|%>
+    <li><%=link_to file[:name], file_path(:id=>file[:id], :name=>file[:name])%>
+        <%=link_to_remote "Delete", :url=>delete_file_path(file[:id], idea_id), :confirm=>"Sure?", :html=>{:class=>'delete_file_link'}%>
+    </li>
+  <%end%>
+</ul>

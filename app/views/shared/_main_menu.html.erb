@@ -1,0 +1,8 @@
+<ul class='tabbernav'>
+  <%if logged_in?%>
+    <li><%=link_to "Dashboard", home_path%></li>
+    <li><%=link_to "Ideas", ideas_path()%></li>
+    <li><%=link_to "Groups", groups_path()%></li>
+  <%end%>  
+</ul>
+<div class='clear'></div>

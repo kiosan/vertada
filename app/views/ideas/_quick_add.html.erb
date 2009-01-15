@@ -1,0 +1,20 @@
+<%=error_messages_for 'idea'%>
+<% form_remote_tag(:url => ideas_path,  :loading=>"show_loader('reply_controls_#{idea.id}', 'loader2');") do%>
+  <%=forulio_editor 'idea', 'body', {:id=>"new_idea", :class=>'post_editor'} %>
+  
+  <div class="clear"></div>
+  <%=link_to "Attach file", {}, :style=>"font-size:0.8em;", :onclick=>"$('q_file').toggle();return false;"%>
+  
+    <div id="reply_controls_<%=idea.id%>" style="float:right">
+      <%= submit_tag("Add Idea") %>
+    </div>
+    <br/>
+    <br/>
+
+<%end%>
+<div id='uploaded_files'>
+  <%=render :partial=>"ideas/uploaded_files", :locals=>{:files=>[]} %>
+</div>
+<div id='q_file' style="display:none;">
+      <%=render :partial=>"ideas/upload_file_form", :locals=>{:idea_id=>idea.id} 	%>
+</div>

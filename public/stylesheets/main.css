@@ -1,4 +1,4 @@
-.span-20 a.logo {display: block; width: 250px; height: 74px; background: url(/images/logo_rails_funda.png) no-repeat;}
+.span-20 a.logo {display: block; float : left; width: 250px; height: 74px; background: url(/images/logo_vertada.png) no-repeat;}
 
 /* Errors */
 .errorExplanation{background-color : #FFE6E6; padding : 6px; font-size : 0.9em;}
@@ -16,7 +16,7 @@ div.fieldWithErrors textarea{	border : 1px solid #FFB3BC;}
 .notice a {color:#514721;}
 .success a {color:#264409;}
 
-.height100{height:100px;}
+.add_idea{width:600px;}
 
 .tb-margin10{margin : 10px 0;}
 
@@ -33,3 +33,21 @@ ol.form li input{margin-top:0px;}
 ol.form label{font-size : 1.2em;color : #666; margin-bottom : 0px;}
 
 h3.form_title{margin:0 auto;width:440px; padding:0px; margin-top : 20px; margin-bottom:8px; font-size : 1.6em;}
+
+
+textarea.post_editor {
+    width: 98%;
+}
+
+.delete_file_link{
+    color: red;
+    font-size: 0.9em;
+}
+h1.page_title{padding : 10px 0;}
+
+.idea_show{margin: 25px 0; background-color : #E3F6E6; padding : 5px;}
+.idea_show .details{color : #999999;}
+.delete_link_place{height : 20px;}
+
+#main_menu{float : left;padding-top : 50px; margin-left : 50px; font-size: 1.5em;}
+.new_idea_link{color : #0EC12B; font-weight : bold;}

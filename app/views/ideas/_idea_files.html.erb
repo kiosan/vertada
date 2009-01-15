@@ -1,0 +1,6 @@
+
+  <ul>
+    <%files.each do |file|%>
+      <li><%=link_to file.file_name, file_path(:id=>file.id, :name=>file.file_name)%>
+    <%end%>
+  </ul>

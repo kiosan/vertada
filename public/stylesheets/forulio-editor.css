@@ -1,0 +1,91 @@
+div.forulio-toolbar span.ed_sep {
+  xposition: relative;
+  xtop: -4px;
+  padding: 0;
+  height: 6px;
+  width: 2px;
+  margin: 0 2px;
+  border-left: solid 1px #d5d5d5;
+  border-right: solid 1px #f5f5f5;
+}
+
+div.forulio-toolbar button {
+    margin: 0;
+	background-color: #f0f0ee;
+	background-repeat: no-repeat;
+	border: 1px solid #f0f0ee;
+	padding: 2px 0;
+}
+
+div.forulio-toolbar button.standard {
+	text-align: center;
+	width: 24px;
+}
+div.forulio-toolbar div.resize_buttons {
+	float:right;
+	display:block;
+	height: 24px;
+}
+div.forulio-toolbar button.resize {
+	width: 27px !important;
+	height: 14px !important;
+	padding:0 !important;
+}
+div.forulio-toolbar button img {
+	vertical-align: text-bottom;
+}
+div.forulio-toolbar button.resize img {
+	vertical-align: top;
+}
+
+div.forulio-toolbar button:hover img.popup{
+	border-left: 1px solid #999;
+}
+
+div.forulio-popup { border: 1px solid #ccc;}
+div.forulio-popup-colors{ background-color:#F0F0EE;}
+
+div.forulio-popup-colors div.item {width:10px;height:10px; border: 1px solid #ccc;}
+div.forulio-popup-colors td { width:12px;height:12px; border-collapse:collapse; border: 1px solid #F0F0EE; padding:2px;}
+div.forulio-popup-colors td:hover {border: 1px solid #000; }
+
+div.forulio-popup-smilies div.item {width:45px;height:30px; border: 1px solid #ccc; background-repeat:no-repeat; background-position:center;}
+div.forulio-popup-smilies td { width:45px;height:30px; border-collapse:collapse; border: 1px solid #F0F0EE; padding:0px; background-color:#FFF;}
+div.forulio-popup-smilies div.item:hover {border: 1px solid #000; }
+
+
+div.forulio-toolbar button:hover, 
+div.forulio-toolbar button.unselected:hover {	border: 1px solid #999;}
+
+div.forulio-popup-video div.item {border: 1px solid #ddd;background-color:#F0F0EE;}
+div.forulio-popup-video td { height:18px; border-collapse:collapse; border: 1px solid #F0F0EE; }
+div.forulio-popup-video td:hover {border: 1px solid #000; cursor:default; }
+div.forulio-popup-video img {float:left;padding-right:5px;}
+div.forulio-popup-video span { font-size:0.8em; text-transform:capitalize;padding-right:5px;}
+
+div.forulio-popup-font-size div.item {border: 1px solid #ddd;background-color:#F0F0EE; padding:0 3px 0 3px;}
+div.forulio-popup-font-size td { height:18px; border-collapse:collapse; border: 1px solid #F0F0EE; }
+div.forulio-popup-font-size td:hover {border: 1px solid #000; cursor:default; }
+
+
+div.forulio-toolbar button.selected {
+	border: 1px solid #ce9100;
+	background-color: #ffffff;
+}
+
+div.forulio-toolbar button.unselected {
+	border: 1px solid #f0f0ee;
+	background-color: #f0f0ee;
+}
+
+div.forulio-toolbar button.publish {
+	padding:5px;
+	display:block;
+}
+
+div.forulio-toolbar {
+	background-color: #f0f0ee;
+	padding: 3px;
+	margin-bottom: 4px;
+  	height:30px;
+}

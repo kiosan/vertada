@@ -9,7 +9,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080922115858) do
+ActiveRecord::Schema.define(:version => 20090114122659) do
+
+  create_table "fs_files", :force => true do |t|
+    t.string   "file_name"
+    t.string   "content_type"
+    t.string   "type"
+    t.integer  "size"
+    t.integer  "uploader_id"
+    t.integer  "idea_id"
+    t.binary   "content",      :limit => 16777215
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ideas", :force => true do |t|
+    t.text     "body"
+    t.string   "tags"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roles", :force => true do |t|
     t.string "name"

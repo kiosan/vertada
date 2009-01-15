@@ -8,6 +8,7 @@
     <%= stylesheet_link_tag "screen", :media => "all" %>
     <%= stylesheet_link_tag "print", :media => "print" %>
     <%= stylesheet_link_tag "main", :media => "all" %>
+    <%= stylesheet_link_tag "tabber", :media => "all" %>
     <!--[if IE]><%= stylesheet_link_tag "ie", :media => "all" %><![endif]-->
     
     <%= javascript_include_tag "prototype" %>
@@ -21,7 +22,7 @@
 
     <%= stylesheet_link_tag 'live_validation' %>
 
-    
+    <%= forulio_editor_support %>
 
   </head>
   
@@ -46,16 +47,25 @@
 
 	<div class="container">
 		<div class="span-20">
-			<%= link_to "", main_url(:subdomain=>false),{:title=>"Bootstrap the web!", :class=>"logo"}%>
+			<%= link_to "", home_url(),{:title=>"Vertada", :class=>"logo"}%>
+      <div id='main_menu'>
+        <%=link_to "Idea!", home_path, :class=>"new_idea_link"%>&nbsp;&nbsp;&nbsp;<%=link_to "Current Ideas", ideas_path%>
+      </div>
 		</div>
 		<div class="span-4 last">
 			<%=render :partial=>"users/user_bar"%>
 		</div>  
-		<hr/>
-    <%=flash_helper%>
+		<div class='clear'></div>
+    
+    <br/>
+    <%render :partial=>"shared/main_menu"%>
+  
+    <div id='flash'>
+      <%=flash_helper%>
+    </div>
+    
+		<%=yield :errors%>
 
-		<%left = (yield :left)%>
-		<%= left.blank? ? "&nbsp;" : left%>
 		
 		<div class="span-24 last">
 			<%=yield%>
@@ -63,7 +73,7 @@
 
 		<hr />
 		<div class="span-6 last">
-			<a href="http://github.com/dovadi/rails_funda">Rails Funda</a>
+			&copy; 2009 <%=(' &#151; %d ' % [Time.today.year]) if Time.today.year > 2009 %><a href="http://vertical-align.com">Vertical Align</a>
 		</div>
 
 	</div>

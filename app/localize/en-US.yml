@@ -1,0 +1,26 @@
+--- 
+time: 
+  :MONTHNAMES: January February March April May June July August September October November December
+  :DAYNAMES: Sunday Monday Tuesday Wednesday Thursday Friday Saturday
+  :ABBR_MONTHNAMES: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+  :ABBR_DAYNAMES: Sun Mon Tue Wed Thu Fri Sat
+translations: 
+  :n_days: "%d days"
+  :half_minute: half a minute
+  :about_month: about 1 month
+  :n_minutes: "%d minutes"
+  :n_month: "%d months"
+  :about_hour: about 1 hour
+  :one_year: about 1 year
+  :less_than_minute: less than a minute
+  :about_n_hours: about %d hours
+  :description: Forum with features that everyone use. Ruby on Rails inside.
+  :over_n_years: over %d years
+  :one_minute: 1 minute
+  :one_day: 1 day
+  :less_than_n_seconds: less than %d seconds
+  :wrote: wrote
+  :active_record_error_message: ""
+  :active_record_error_header: "Action can not be completed because of follwoing errors:"
+
+  

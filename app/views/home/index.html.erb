@@ -1,8 +1,8 @@
 <%content_for(:title, current_user.login) %>
-<h2>Hello, <%=current_user.login%></h2>
-<div class='height100' id="panel">
-  This is your home page. For now you can <%=link_to "edit", edit_user_path(current_user), { :title => "Edit account information" } %> you account information or do <%= link_to "log out", logout_path, { :title => "Log out" }%>.
-  <p>
-    <br/><%=link_to_function "jQuery test", visual_effect(:shake, :panel)%>
-  </p>
+<h1 class='page_title'>Add Idea</h1>
+<div class='add_idea' id="add_idea_place">
+  <%=render :partial => 'ideas/quick_add', :locals=>{:idea=>Idea.new}%>
+</div>
+<div id='idea_place'>
+
 </div>

@@ -1,0 +1,12 @@
+<%if @err_message%>
+<div class='error'><%=@err_message%> <%=number_to_human_size(CONFIG[:max_upload_file_size])%></div>
+<%end%>
+<%=form_tag(upload_file_path, :multipart => true, :target=>"iiframe")%>
+			<%= file_field 'fs_file', 'uploaded_data', :id => 'media_file',  :size => 35%>
+			<input type="submit" value='<%="Upload"%>' class="btn" />
+      <%if idea_id%>
+        <input type="hidden" value="<%=idea_id%>" name="idea_id">
+      <%end%>
+</form>
+<iframe id='iiframe' name="iiframe" style="width:1px;height:1px;visibility:hidden;"></iframe>
+<br/><br/>

@@ -1,8 +1,8 @@
 development:
   adapter: mysql
-  database: funda_development
+  database: vertada
   username: root
-  password: 
+  password: atrac
   encoding: utf8
  
 test:
@@ -14,7 +14,7 @@ test:
 
 production:
   adapter: mysql
-  database: funda_production
+  database: vertada
   username: root
-  password: 
+  password: atrac
   encoding: utf8

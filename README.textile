@@ -5,7 +5,7 @@ h1. Vertada
 
 h2. Credits
 
-This project is funded and maintained by "Vertaline":http://vertaline.com, contact "Oleksandr Bondar":mailto:mailbox@vertical-align.com
+This project is funded and maintained by "Vertaline":http://vertaline.com.ua, contact "Oleksandr Bondar":mailto:mailbox@vertical-align.com
 
 h2. Licence
 
