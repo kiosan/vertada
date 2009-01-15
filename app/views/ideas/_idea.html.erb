@@ -2,7 +2,7 @@
   <div class='details'>
     By <%=current_user.login == idea.user.login ? 'me' : idea.user.login%> 
     <%= time_ago_in_words(idea.created_at)
-%> (<%=formatted_time(idea.created_at)
+%> <%="ago"%> (<%=formatted_time(idea.created_at)
 %>)
   </div>
   <div class='content'>
