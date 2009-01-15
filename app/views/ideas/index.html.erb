@@ -5,12 +5,3 @@
 <%=render :partial=>"idea", :collection=>@ideas%>
 <%=will_paginate @ideas%>
 <br/>
-
-<script>
- function show_delete_link(id){
-   $('delete_' + id).show();
- }
- function hide_delete_link(id){
-   $('delete_' + id).hide();
- }
-</script>

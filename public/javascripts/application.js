@@ -33,3 +33,10 @@ function show_loader(container_id, image )
 		show();
 	}
 }
+
+ function show_delete_link(id){
+   $('delete_' + id).show();
+ }
+ function hide_delete_link(id){
+   $('delete_' + id).hide();
+ }
