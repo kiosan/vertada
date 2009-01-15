@@ -7,6 +7,8 @@
     <%unless current_user%>
       <%=link_to "Create account now!", signup_path, :class=>"signup_link"%>
       
+    <%else%>
+      <%=link_to "Add Idea", home_path, :class=>"signup_link", :style=>"font-size : 1.7em;"%>
     <%end%>
   </p>
   <br/><br/>
