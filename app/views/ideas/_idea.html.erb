@@ -1,8 +1,8 @@
 <div class='idea_show' id='idea_c_<%=idea.id%>' onmouseover="show_delete_link(<%=idea.id%>)" onmouseout="hide_delete_link(<%=idea.id%>)">
   <div class='details'>
     By <%=current_user.login == idea.user.login ? 'me' : idea.user.login%> 
-    <%= #time_ago_in_words(idea.created_at)
-%> (<%=#formatted_time(idea.created_at)
+    <%= time_ago_in_words(idea.created_at)
+%> (<%=formatted_time(idea.created_at)
 %>)
   </div>
   <div class='content'>
