@@ -38,6 +38,7 @@ h3.form_title{margin:0 auto;width:440px; padding:0px; margin-top : 20px; margin-
 textarea.post_editor {
     width: 98%;
 }
+.height100{height : 100px;}
 
 .delete_file_link{
     color: red;
