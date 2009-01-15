@@ -1,10 +1,13 @@
 
 <%content_for(:title, "Welcome to the main page") %>
-<div class='height100'>
-	<% if logged_in? %>
-		<p>Hello <%= current_user.login %>, you now see different content on the main page because you're logged in. </p>
-	<% else %>
-		<h4>Hello Guest!</h4> 
-		Would you be so kind to <%= link_to "log in",  login_path,  { :title => "Log in" } %> or <%= link_to "sign up", signup_path, { :title => "Create an account" } %>.
-	<% end %>
+<div>
+	<p>Vertada is a simple application to store ideas. You can write down idea, attatch files to it. </p>
+  <p>Vertada is free. Take it on <a href="http://github.com/kiosan/vertada/tree/master">Github</a> and use it.</p>
+  <p>
+    <%unless current_user%>
+      <%=link_to "Create account now!", signup_path, :class=>"signup_link"%>
+      
+    <%end%>
+  </p>
+  <br/><br/>
 </div>
