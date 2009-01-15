@@ -8,16 +8,19 @@ class IdeasController < ApplicationController
   
   def create
     @idea = Idea.new
+    @idea.body = params[:idea][:body]
+    @idea.user_id = current_user.id
+    if @idea.save
+      FManager.files_for_post(session, nil).each do |file|
+        f = FsFile.find(file[:id])
+        f.idea_id = @idea.id
+        f.save
+      end
+    end
     render :update do |page|
         idea_id = 'new_idea'
-        @idea.body = params[:idea][:body]
-        @idea.user_id = current_user.id
         if @idea.save
-          FManager.files_for_post(session, nil).each do |file|
-            f = FsFile.find(file[:id])
-            f.idea_id = @idea.id
-            f.save
-          end
+          
           
           FManager.clear_for_post(session, nil)
           
