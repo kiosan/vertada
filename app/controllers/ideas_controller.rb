@@ -1,5 +1,7 @@
 class IdeasController < ApplicationController
   
+  before_filter :login_required
+  
   def index
     @ideas = current_user.ideas.paginate(:page=>params[:page], :order=>"created_at DESC")
   end
