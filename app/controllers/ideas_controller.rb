@@ -21,10 +21,6 @@ class IdeasController < ApplicationController
           
           FManager.clear_for_post(session, nil)
           
-          if request.post?
-            return
-          end
-          
           
           page.replace_html "uploaded_files", :partial=>"uploaded_files", :locals=>{:files=>[]} 
           
