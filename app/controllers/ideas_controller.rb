@@ -100,4 +100,46 @@ class IdeasController < ApplicationController
       end
     end
   end
+  
+  
+  def add_tags
+    tags = params[:tags].split(",")
+    idea = Idea.find_by_id(params[:id]) unless tags.empty?
+    if tags.empty?
+      render :text=>nil
+      return
+    end
+    tags.each do |tag_ttl|    
+      
+      tag = TagSharing.find(:first, :conditions=>["tags.name=?",tag_ttl], :include=>[:tag])
+      
+      if tag.nil?
+        tag1 = Tag.create(:name=>tag_ttl)
+        tag = TagSharing.create({:tag => tag1, :user => current_user, :owner_id => current_user.id})
+      end
+      
+      unless idea.visible_tags_for(current_user).include?(tag)
+        IdeaTag.create!(:tag_sharing_id=>tag.id, :idea_id=>idea.id, :user_id=>current_user.id)
+        idea.reload
+      end
+    end
+    
+    render :update do |page| 
+       page << "$j('#tags_#{idea.id}').show();"
+       page.replace_html "tags_#{idea.id}", :partial=>"tags", :locals=>{:tags=>idea.visible_tags_for(current_user), :idea=>idea}
+       page << "$j('#add_tags_#{idea.id}').effect(\"highlight\", {}, 1000);"
+    end
+  end
+  
+  def delete_tag
+    IdeaTag.delete_all(["idea_id=? and tag_sharing_id=? and user_id=?", params[:idea_id], params[:tag_id], current_user.id])
+   
+    idea = Idea.find_by_id(params[:idea_id])
+    render :update do |page| 
+      page.replace_html "tags_#{idea.id}", :partial=>"tags", :locals=>{:tags=>idea.visible_tags_for(current_user), :idea=>idea}
+      page.replace_html "add_tags_#{idea.id}", :partial=>"ideas/add_tags", :locals=>{:idea=>idea}
+      page << "$j('#tags_#{idea.id}').hide();" if idea.visible_tags_for(current_user).length == 0 
+    end
+  end
+  
 end

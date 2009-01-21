@@ -1,0 +1,21 @@
+<% form_remote_tag(:url => {:controller=>'ideas', :action=>'add_tags', :id=>idea},  
+			:loading=>"$('tag_names_#{idea.id}').value='';") do%>
+    <div class="clear"></div>
+    <input type='text' id='tag_names_<%=idea.id%>' name='tags' style='width:200px'>
+    <div id="tag_names_div_<%=idea.id%>" class="autocomplete" style="display:none"></div>
+    
+    <script>
+       // new Ajax.Autocompleter('tag_names_<%=idea.id%>', 'tag_names_div_<%=idea.id%>', '/tags/autocomplete', { paramName:'tag', minChars: 2,frequency: 0.15,tokens: ','});
+    </script> 
+     
+    <span>
+      <%= submit_tag("Add tags"[:add_tags]) %> <%="or"[:or]%> 
+      <a href="#" onclick="$('add_tags_<%=idea.id%>').toggle();return false;"><%="Cancel"[:cancel]%></a><br/> <small><%="separated by comma"[:separated_by_comma]%></small>
+    </span>
+<%end%>
+
+<!--small><%="or click to mark as "[:or_click_to_mark_as]%></small-->
+<%idea.quick_tags(current_user).each do |tag|%>
+  <%=link_to_remote tag.title, :url=>{:controller=>'posts', :action=>'add_tags', :id=>idea, :tags=>idea.title}, :html=>{:id=>'qtag_%d_%d' %[tag.id, idea.id], 
+			:style=>"#{tag.style}; margin: 0 2px 0 2px;"},	:complete=>"$('qtag_%d_%d').remove();" %[tag.id, idea.id]%>
+<%end%>

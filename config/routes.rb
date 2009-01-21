@@ -16,6 +16,11 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :ideas
   
+  map.delete_tag 'delete_tag/:tag_id/:idea_id', :controller => 'ideas', :action => 'delete_tag'
+  
+  
+  map.tags_filter 'search/tags/:tags', :controller=>'search', :action=>'tags' 
+  
   
   map.upload_file 'upload_file', :controller=>"ideas", :action=>'upload_file' 
   map.connect 'delete_file/:id', :controller=>"ideas", :action=>'delete_file' 

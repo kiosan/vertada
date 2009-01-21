@@ -5,6 +5,14 @@
 %> <%="ago"%> (<%=formatted_time(idea.created_at)
 %>)
   </div>
+  
+  <div class='idea_controls'>
+   <a href="add_tags" onclick="$('add_tags_<%=idea.id%>').toggle();return false;"><%='add tags'[:add_tags]%></a>
+  </div>
+    <div id="add_tags_<%=idea.id%>" class="add_tags_panel" style="display:none;">
+       <%=render :partial=>"ideas/add_tags", :locals=>{:idea=>idea}%>
+    </div>
+  
   <div class='content'>
     <%=html_encode(idea.body, true)%>
   </div>
@@ -13,7 +21,11 @@
     <div class='delete_link_place'>
       <div id='delete_<%=idea.id%>' style='display:none;'>
         <%=link_to_remote "Delete", :url=>{ :action => "destroy", :id => idea},  :method => :delete, :confirm=>"Sure?", :html=>{:class=>'delete_file_link'}%>
-      </div>  
+      </div>
     </div>
   <%end%>
+  
+    <div class='tags' id="tags_<%=idea.id%>" <%if idea.visible_tags_for(current_user).length == 0%>style="display:none;"<%end%>>
+        <%=render :partial=>'ideas/tags', :locals=>{:tags=>idea.visible_tags_for(current_user), :idea=>idea}%>
+   </div>
 </div>

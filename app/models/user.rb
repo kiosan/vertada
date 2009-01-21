@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   
   has_many :ideas
   
+  has_many :tag_sharings
+  
   # has_role? simply needs to return true or false whether a user has a role or not.  
   # It may be a good idea to have "admin" roles return true always
   def has_role?(role_in_question)

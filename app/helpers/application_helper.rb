@@ -63,6 +63,18 @@ module ApplicationHelper
     coder = HTMLEntities.new
     coder.decode(str)
   end
+  
+  def tag_toggle_uri(tag_id)
+   tag_ids = controller.request.path_parameters[:tags].split(',').collect{|id| id.to_i}.delete_if{|i| i == 0} if request.path_parameters[:tags]
+   tag_ids = [] if tag_ids.nil?
+   
+   if tag_ids.include?(tag_id)
+     tag_ids = tag_ids - [tag_id]
+   else
+     tag_ids = tag_ids + [tag_id]
+   end
+   current_url_add({:tags=>tag_ids.join(','), :page=>[]})
+ end
  
  def streamlined_top_menus
    [
