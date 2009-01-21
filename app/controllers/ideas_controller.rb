@@ -3,6 +3,7 @@ class IdeasController < ApplicationController
   before_filter :login_required
   
   def index
+    @shared_tags = current_user.tag_sharings.find(:all, :conditions=>["owner_id != user_id"])
     @ideas = current_user.ideas.paginate(:page=>params[:page], :order=>"created_at DESC")
   end
   
@@ -119,7 +120,7 @@ class IdeasController < ApplicationController
       end
       
       unless idea.visible_tags_for(current_user).include?(tag)
-        IdeaTag.create!(:tag_sharing_id=>tag.id, :idea_id=>idea.id, :user_id=>current_user.id)
+        IdeaTag.create!(:tag_sharing_id=>tag.id, :tag_id => tag.tag_id, :idea_id=>idea.id, :user_id=>current_user.id)
         idea.reload
       end
     end
@@ -132,7 +133,7 @@ class IdeasController < ApplicationController
   end
   
   def delete_tag
-    IdeaTag.delete_all(["idea_id=? and tag_sharing_id=? and user_id=?", params[:idea_id], params[:tag_id], current_user.id])
+    IdeaTag.delete_all(["idea_id=? and tag_id=? and user_id=?", params[:idea_id], params[:tag_id], current_user.id])
    
     idea = Idea.find_by_id(params[:idea_id])
     render :update do |page| 

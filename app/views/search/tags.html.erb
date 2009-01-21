@@ -8,7 +8,7 @@
         
         <b><%="Selected tags:"%></b><br/>
             <small class="hint"><%="Click on tag to remove it from filter"%></small><br/>
-      			<%=render :partial=>"ideas/tags", :locals=>{:tags=>@tags, :search_url=>false, :sharings => true}%>    
+      			<%=render :partial=>"tags", :locals=>{:tags=>@tags, :search_url=>false, :sharings => true}%>    
       </td>
       <td>
         <%if @related_tags.length > 0%>
@@ -16,7 +16,7 @@
       		<div class="innerBox" >
       			<b><%="Related tags:"%></b><br/>
             <small class="hint"><%="Click on tag to add it to filter"%></small><br/>
-      			<%=render :partial=>"ideas/tags", :locals=>{:tags=>@related_tags, :search_url=>false}%>    
+      			<%=render :partial=>"tags", :locals=>{:tags=>@related_tags, :search_url=>false}%>    
       		</div>
       	</div>
       	<%end%>

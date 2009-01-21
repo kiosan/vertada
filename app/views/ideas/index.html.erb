@@ -1,6 +1,21 @@
 <%content_for(:title, "All Ideas list") %>
 <h1 class='page_title'>What to do</h1>
+<table>
+  <tr>
+      <td width='50%'>
+       
+      </td>
+      <td>
+        <%if @shared_tags.length > 0%>
 
+      			<b><%="Shared tags for you:"%></b><br/>
+            <small class="hint"><%="Click on tag to view shared ideas."%></small><br/>
+      			<%=render :partial=>"tags", :locals=>{:tags=>@shared_tags, :search_url=>true}%>    
+
+      	<%end%>
+      </td>  
+  </tr>  
+</table>
 <%=will_paginate @ideas%>
 <%=render :partial=>"idea", :collection=>@ideas%>
 <%=will_paginate @ideas%>
