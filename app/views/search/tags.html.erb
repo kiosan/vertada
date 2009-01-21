@@ -1,10 +1,14 @@
 <%content_for(:title, "Filtered Ideas") %>
 
 <h1 class='page_title'>Filtered Ideas</h1>
+&larr; <%=link_to "back to all ideas list", ideas_path%>
 <table>
   <tr>
       <td width='50%'>
-        &larr; <%=link_to "back to all ideas list", ideas_path%>
+        
+        <b><%="Selected tags:"%></b><br/>
+            <small class="hint"><%="Click on tag to remove it from filter"%></small><br/>
+      			<%=render :partial=>"ideas/tags", :locals=>{:tags=>@tags, :search_url=>false, :sharings => true}%>    
       </td>
       <td>
         <%if @related_tags.length > 0%>

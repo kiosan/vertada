@@ -2,7 +2,8 @@
 <%=
  idea ||= nil
  search_url ||= false
- tags = tags.collect{|t| t.tag_sharing}
+ sharings ||= false
+ tags = tags.collect{|t| t.tag_sharing} unless sharings
  tags.collect {|tag| 
 		res = link_to(tag.tag.name, (!idea.nil? || search_url) ? tags_filter_path(tag.id) : tag_toggle_uri(tag.id), {:style=>tag.style} )
     res << link_to_remote(image_tag('del_tag.gif'), :url=>delete_tag_path(:tag_id=>tag.id, :idea_id=>idea.id), :confirm=>"Sure?"[:sure_]) if (tag.user==current_user && idea)
