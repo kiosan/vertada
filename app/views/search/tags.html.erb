@@ -1,1 +1,28 @@
-Under construction
+<%content_for(:title, "Filtered Ideas") %>
+
+<h1 class='page_title'>Filtered Ideas</h1>
+<table>
+  <tr>
+      <td width='50%'>
+        <%=link_to "&larr; back to all ideas list", ideas_path%>
+      </td>
+      <td>
+        <%if @related_tags.length > 0%>
+      	<div class="outerBox" >
+      		<div class="innerBox" >
+      			<b><%="Related tags:"%></b><br/>
+            <small class="hint"><%="Click on tag to add it to filter"%></small><br/>
+      			<%=render :partial=>"ideas/tags", :locals=>{:tags=>@related_tags, :search_url=>false}%>    
+      		</div>
+      	</div>
+      	<%end%>
+      </td>  
+  </tr>  
+</table>
+
+
+
+<%=will_paginate @ideas%>
+<%=render :partial=>"ideas/idea", :collection=>@ideas%>
+<%=will_paginate @ideas%>
+<br/>

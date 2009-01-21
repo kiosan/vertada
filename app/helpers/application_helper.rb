@@ -76,6 +76,13 @@ module ApplicationHelper
    current_url_add({:tags=>tag_ids.join(','), :page=>[]})
  end
  
+ def current_url_add(data)
+    path = request.path_parameters.dup
+    path.update(data)
+    data.each{|k,v| path.delete_if {|key, value| (key.to_s == k.to_s and v.length == 0) }}
+    path
+ end
+ 
  def streamlined_top_menus
    [
     ["View site", home_path],
