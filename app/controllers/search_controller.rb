@@ -13,15 +13,17 @@ class SearchController < ApplicationController
     
     select = "ideas.*"
 
-    @ideas = Idea.paginate(:all, :page =>params[:page], :per_page=>10,:select=>select, :joins=>joins, :include=>[:idea_tags], :group=>'ideas.id')
-    
+    @ideas = Idea.find(:all, :select=>select, :joins=>joins, :include=>[:idea_tags], :group=>'ideas.id')
     related_tags = []
     @related_tags = []
     @ideas.each{|t| related_tags += t.visible_tags_for(current_user) }
     related_tags.each do |t|
+    
       @related_tags << t unless @tags.include?(t.tag_sharing)
     end
     @related_tags.uniq!
+    
+    @ideas = Idea.paginate(:all, :page =>params[:page], :per_page=>10,:select=>select, :joins=>joins, :include=>[:idea_tags], :group=>'ideas.id')
   end
   
 end
