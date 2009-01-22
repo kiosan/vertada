@@ -19,7 +19,7 @@ class SearchController < ApplicationController
     end
     @related_tags.uniq!
     
-    @ideas = Idea.paginate(:all, :page =>params[:page], :per_page=>10,:select=>select, :joins=>joins, :include=>[:idea_tags], :group=>'ideas.id')
+    @ideas = Idea.paginate(:all, :page =>params[:page], :per_page=>10,:select=>select, :joins=>joins, :include=>[:idea_tags], :group=>'ideas.id', :order=>"ideas.created_at DESC")
   end
   
 end
