@@ -1,0 +1,13 @@
+<%=error_messages_for 'idea'%>
+<% form_remote_tag(:url => {:controller=>'ideas', :action=>'update_idea', :id=>idea},  :loading=>"show_loader('edit_controls_#{idea.id}', 'loader2');") do%>
+  <%=forulio_editor 'idea', 'body', {:id=>"post_editor#{idea.id}", :class=>'post_editor'} %>
+  <div class="clear"></div>
+    <div id="edit_controls_<%=idea.id%>" style="float:right">
+      <%= submit_tag("Update") %> <%="or"[:or]%> 
+      <a href="#" onclick="Idea.restoreContent('<%=idea.id%>');$j('#delete_<%=idea.id%>').removeClass('edit');return false;"><%="Cancel"%></a>
+    </div>
+  </div>
+<%end%>
+<div id='uploaded_files_<%=idea.id%>'>
+  <%=render :partial=>"edit_idea_files", :locals=>{:files=>idea.files, :idea_id=>idea.id} %>
+</div>

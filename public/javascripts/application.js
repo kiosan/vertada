@@ -35,8 +35,29 @@ function show_loader(container_id, image )
 }
 
  function show_delete_link(id){
-   $('delete_' + id).show();
+   if (!$('delete_' + id).hasClassName("edit")){
+     $('delete_' + id).show();
+   }
  }
  function hide_delete_link(id){
    $('delete_' + id).hide();
  }
+ 
+var Idea = 
+{
+	backupContent:function(id, force){
+		var content_div = $('content_' + id);
+		if(!content_div.__backupHTML || force){
+			content_div.__backupHTML = content_div.innerHTML;
+		}
+	},
+	restoreContent:function(id){
+		var content_div = $('content_' + id);
+    var content_id = '#content_' + id
+		content_div.innerHTML = content_div.__backupHTML;
+	
+		var updated = $('idea_updated_'+ id)
+		if (updated) updated.hide();
+	  $j(content_id).effect("highlight", {}, 1000);
+	}
+}

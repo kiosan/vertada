@@ -1,0 +1,2 @@
+<%=html_encode(idea.body, true)%>
+<%=render :partial=>"ideas/idea_files", :locals=>{:files=>idea.files}%>

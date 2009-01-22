@@ -34,15 +34,52 @@ class IdeasController < ApplicationController
             page.replace_html  'idea_place', render(:partial => 'ideas/idea', :locals=>{:idea=>@idea})
             page.replace_html  'add_idea_place', render(:partial => 'ideas/quick_add', :locals=>{:idea=>Idea.new})
             page.replace_html  'flash', flash_helper
-            page.visual_effect :Highlight,  'add_idea_place'
+            page << "$j('#add_idea_place').effect(\"highlight\", {}, 1000);" 
+
             page[:new_idea].value = ''
         else
           #display error
           page.replace_html  "add_idea_place", render(:partial => 'ideas/quick_add', :locals=>{:idea=>@idea})
-          page.visual_effect :Highlight,  "add_idea_place"
+          page << "$j('#add_idea_place').effect(\"highlight\", {}, 1000);" 
         end
       
     end
+  end
+  
+  def edit
+    @idea = Idea.find_by_id(params[:id])
+    return if @idea.nil? 
+    id = @idea.id
+    content_id = "content_#{@idea.id}"
+    render :update do |page|
+        if can_edit_idea(@idea)
+          page << "Idea.backupContent(#{@idea.id});";
+          page.replace_html  content_id, render(:partial => 'ideas/edit', :locals=>{:idea => @idea})
+          page["delete_#{id}"].addClass("edit")
+          page << "$j('##{content_id}').effect(\"highlight\", {}, 1000);"
+        end
+    end
+  end
+  
+  def update_idea
+    @idea = Idea.find_by_id(params[:id])
+    return if @idea.nil? 
+    id = @idea.id
+    render :update do |page|
+      content_id = "content_#{@idea.id}"
+      if can_edit_idea(@idea)
+        if @idea.update_attribute('body', params[:idea][:body])
+          FManager.clear_for_post(session, @idea.id)
+          page.replace_html content_id, render(:partial => 'ideas/updated', :locals=>{:idea => @idea})
+          page << "Idea.backupContent(#{@idea.id}, true);"
+          page << "$j('##{content_id}').effect(\"highlight\", {}, 1000);" 
+          page["delete_#{id}"].removeClass("edit")
+        else
+          page.replace_html  content_id, render(:partial => 'ideas/edit', :locals=>{:idea => @idea})
+          page << "$j('##{content_id}').effect(\"highlight\", {}, 1000);"
+        end
+      end
+   end
   end
   
   def destroy
@@ -83,21 +120,21 @@ class IdeasController < ApplicationController
   end
   
   def delete_file
-    post_id=params[:post_id] ? params[:post_id].to_i : nil
+    idea_id=params[:idea_id] ? params[:idea_id].to_i : nil
     file = FsFile.find_by_id(params[:id])
     
     uploaded_files_id  = "uploaded_files"
-    uploaded_files_id << "_#{params[:post_id]}" unless post_id.nil?
+    uploaded_files_id << "_#{params[:idea_id]}" unless idea_id.nil?
 
 
-    if post_id
-      post = Post.find_by_id(post_id)
-      FManager.load_from_post(session, post)
+    if idea_id
+      idea = Idea.find_by_id(idea_id)
+      FManager.load_from_idea(session, idea)
     end
-    if (file.uploader==current_user or moderator_required) and file.destroy
-      FManager.remove_file(session, post_id, file.id)
+    if (file.uploader==current_user) and file.destroy
+      FManager.remove_file(session, idea_id, file.id)
       render :update do |page|  
-          page.replace_html uploaded_files_id, :partial=>"uploaded_files", :locals=>{:files=>FManager.files_for_post(session, post_id), :post_id=>post_id} 
+          page.replace_html uploaded_files_id, :partial=>"uploaded_files", :locals=>{:files=>FManager.files_for_post(session, idea_id), :idea_id=>idea_id} 
       end
     end
   end
