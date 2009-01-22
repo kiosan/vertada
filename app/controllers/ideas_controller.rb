@@ -34,13 +34,13 @@ class IdeasController < ApplicationController
             page.replace_html  'idea_place', render(:partial => 'ideas/idea', :locals=>{:idea=>@idea})
             page.replace_html  'add_idea_place', render(:partial => 'ideas/quick_add', :locals=>{:idea=>Idea.new})
             page.replace_html  'flash', flash_helper
-            page << "$j('#add_idea_place').effect(\"highlight\", {}, 1000);" 
+            page << "$j('#add_idea_place').effect(\"highlight\", {}, 300);" 
 
             page[:new_idea].value = ''
         else
           #display error
           page.replace_html  "add_idea_place", render(:partial => 'ideas/quick_add', :locals=>{:idea=>@idea})
-          page << "$j('#add_idea_place').effect(\"highlight\", {}, 1000);" 
+          page << "$j('#add_idea_place').effect(\"highlight\", {}, 300);" 
         end
       
     end
@@ -56,7 +56,7 @@ class IdeasController < ApplicationController
           page << "Idea.backupContent(#{@idea.id});";
           page.replace_html  content_id, render(:partial => 'ideas/edit', :locals=>{:idea => @idea})
           page["delete_#{id}"].addClass("edit")
-          page << "$j('##{content_id}').effect(\"highlight\", {}, 1000);"
+          page << "$j('##{content_id}').effect(\"highlight\", {}, 400);"
         end
     end
   end
@@ -72,11 +72,11 @@ class IdeasController < ApplicationController
           FManager.clear_for_post(session, @idea.id)
           page.replace_html content_id, render(:partial => 'ideas/updated', :locals=>{:idea => @idea})
           page << "Idea.backupContent(#{@idea.id}, true);"
-          page << "$j('##{content_id}').effect(\"highlight\", {}, 1000);" 
+          page << "$j('##{content_id}').effect(\"highlight\", {},300);" 
           page["delete_#{id}"].removeClass("edit")
         else
           page.replace_html  content_id, render(:partial => 'ideas/edit', :locals=>{:idea => @idea})
-          page << "$j('##{content_id}').effect(\"highlight\", {}, 1000);"
+          page << "$j('##{content_id}').effect(\"highlight\", {}, 300);"
         end
       end
    end
@@ -165,7 +165,7 @@ class IdeasController < ApplicationController
     render :update do |page| 
        page << "$j('#tags_#{idea.id}').show();"
        page.replace_html "tags_#{idea.id}", :partial=>"tags", :locals=>{:tags=>idea.visible_tags_for(current_user), :idea=>idea}
-       page << "$j('#add_tags_#{idea.id}').effect(\"highlight\", {}, 1000);"
+       page << "$j('#add_tags_#{idea.id}').effect(\"highlight\", {}, 700);"
     end
   end
   
