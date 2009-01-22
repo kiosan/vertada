@@ -21,8 +21,8 @@
   <%if current_user == idea.user%>
     <div class='delete_link_place'>
       <div id='delete_<%=idea.id%>' style='display:none;'>
-       <%=link_to_remote "Edit", :url=>{ :action => "edit", :id => idea}%>&nbsp;&nbsp;
-        <%=link_to_remote "Delete", :url=>{ :action => "destroy", :id => idea},  :method => :delete, :confirm=>"Sure?", :html=>{:class=>'delete_file_link'}%>
+       <%=link_to_remote "Edit", :url=>{:controller=>"ideas", :action => "edit", :id => idea}%>&nbsp;&nbsp;
+        <%=link_to_remote "Delete", :url=>{:controller=>"ideas", :action => "destroy", :id => idea},  :method => :delete, :confirm=>"Sure?", :html=>{:class=>'delete_file_link'}%>
       </div>
     </div>
   <%end%>
