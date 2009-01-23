@@ -2,6 +2,9 @@
 <% form_remote_tag(:url => ideas_path,  :loading=>"show_loader('reply_controls_#{idea.id}', 'loader2');") do%>
   <%=forulio_editor 'idea', 'body', {:id=>"new_idea", :class=>'post_editor'} %>
   
+  <%=hidden_field 'idea', 'client', :value=>'web'%>
+
+  
   <div class="clear"></div>
   <%=link_to "Attach file", {}, :style=>"font-size:0.8em;", :onclick=>"$('q_file').toggle();return false;"%>
   

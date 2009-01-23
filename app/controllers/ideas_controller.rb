@@ -8,8 +8,7 @@ class IdeasController < ApplicationController
   end
   
   def create
-    @idea = Idea.new
-    @idea.body = params[:idea][:body]
+    @idea = Idea.new(params[:idea])
     @idea.user_id = current_user.id
     if @idea.save
       FManager.files_for_post(session, nil).each do |file|
