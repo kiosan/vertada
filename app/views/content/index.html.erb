@@ -2,7 +2,8 @@
 <%content_for(:title, "Welcome!") %>
 <br/><br/>
 <div>
-	<p>Vertada is a simple application to store ideas. You can write down idea, attach files to it. </p>
+	<h3>Vertada is a simple application to store and share ideas.</h3>
+  <p>
   What inside:
   <ul>
     <li>File attachments to ideas</li>
@@ -10,9 +11,21 @@
     <li>Simple text editor with video and smiles insert feature</li>
     <li>Filtering by tags</li>
   </ul>
-  <p>Vertada is free. Take it on <a href="http://github.com/kiosan/vertada/tree/master">Github</a> and use it.</p>
-  <p>Contact: Oleksandr Bondar obondar@gmail.com.</p>
+  </p>
+  <p><h3>Vertada desktop client</h3>
+    With desktop client that is always on hand you never lost your thoughts. <a href="/client/vertada.7z">Download</a> Vertada desktop client now.
   <p>
+  
+  <h3>Vertada is free</h3>
+  <p>
+     Take it on <a href="http://github.com/kiosan/vertada/tree/master">Github</a> and use it.
+  </p>
+  
+  <p>
+    Contact: Oleksandr Bondar obondar@gmail.com.
+  </p>
+  
+  
     <%unless current_user%>
       <%=link_to "Create account now!", signup_path, :class=>"signup_link"%>
       
