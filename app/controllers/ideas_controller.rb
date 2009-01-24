@@ -5,8 +5,9 @@ class IdeasController < ApplicationController
   def index
     @shared_tags = current_user.tag_sharings.find(:all, :conditions=>["owner_id != user_id"])
     
-    joins = "INNER JOIN tag_sharings ON ideas.id = tag_sharings.idea_id AND tag_sharings.user_id = #{current_user.id}"
-    @ideas = Idea.paginate(:page=>params[:page], :joins=>joins, :order=>"created_at DESC", :group=>'ideas.id')
+    joins = "LEFT JOIN tag_sharings ON ideas.id = tag_sharings.idea_id"
+    conditions =  "(tag_sharings.user_id = #{current_user.id} OR ideas.user_id = #{current_user.id})"
+    @ideas = Idea.paginate(:page=>params[:page], :joins=>joins, :conditions=>conditions, :order=>"created_at DESC", :group=>'ideas.id')
   end
   
   def create
@@ -163,9 +164,9 @@ class IdeasController < ApplicationController
   def delete_tag
     idea = Idea.find_by_id(params[:idea_id])
    
-    TagSharing.delete_all(["idea_id=? and tag_id=? and (user_id=? OR owner_id=?)", params[:idea_id], params[:tag_id], current_user.id, current_user.id])
+    TagSharing.delete_all(["idea_id=? and tag_id=? and owner_id=?", params[:idea_id], params[:tag_id], current_user.id])
     render :update do |page| 
-      page.replace_html "tags_#{idea.id}", :partial=>"tags", :locals=>{:tags=>idea.tag_sharings_for_user(current_user), :idea=>idea}
+      page.replace_html "tags_#{idea.id}", :partial=>"tags", :locals=>{:tag_sharings=>idea.tag_sharings_for_user(current_user), :idea=>idea}
       page.replace_html "add_tags_#{idea.id}", :partial=>"ideas/add_tags", :locals=>{:idea=>idea}
       page << "$j('#tags_#{idea.id}').hide();" if idea.tag_sharings_for_user(current_user).length == 0 
     end
