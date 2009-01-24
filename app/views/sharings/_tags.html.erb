@@ -1,0 +1,22 @@
+<%=image_tag('tag.png', :class=>"tag_image") if tag_sharings.length > 0%>
+<%=tag_sharings.collect {|ts| 
+	
+  link_to(ts.tag.name, "#", {:style=>ts.style, :onclick=>"share_tag_with(#{ts.tag_id});return false;"} )
+
+}.join(", ")
+%>
+<br />
+<% form_remote_tag(:url => sharings_path, :complete=>"hide_text()") do%>
+	<input type="hidden" id="tag_id_for_share" name="tag_id_for_share">
+	<input type="text" id="user_for_share" name="user_for_share" style="display:none" onblur="hide_text()">
+<%end%>
+
+<script>
+	function share_tag_with(tag_id) {
+		$j('#tag_id_for_share').val(tag_id);
+		$j('#user_for_share').show().focus();
+	}
+	function hide_text() {
+		$j('#user_for_share').hide().val('')
+	}
+</script>

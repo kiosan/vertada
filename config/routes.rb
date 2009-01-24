@@ -15,6 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
   
   map.resources :ideas
+  map.resources :sharings
   
   map.delete_tag 'delete_tag/:tag_id/:idea_id', :controller => 'ideas', :action => 'delete_tag'
   

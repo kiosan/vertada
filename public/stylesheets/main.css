@@ -76,3 +76,22 @@ div.tags img.tag_image {
   color : #97D47C;
 }
 
+.sharing_list{
+	height: 200px;
+}
+.sharing_list .share input {
+	
+}
+
+.sharing_list .share {
+	font-size: 10pt;
+	height: 25px;
+}
+.sharing_list .share_user {
+	color: red;
+	font-weight: bold;
+}
+.sharing_list .share_tag {
+	color: blue;
+	font-weight: bold;
+}

@@ -151,9 +151,15 @@ class IdeasController < ApplicationController
     end
     tags.each do |tag_ttl|    
       tag = Tag.find(:first, :conditions=>["name=?",tag_ttl]) || Tag.create(:name=>tag_ttl)
-      ts = TagSharing.create({:tag => tag, :user => current_user, :owner_id => current_user.id, :idea_id=>idea.id})
+      
+      options = {:tag => tag, :user_id => current_user.id, :owner_id => current_user.id, :idea_id=>idea.id}
+      conds = ['tag_id = ? AND owner_id = ? AND owner_id != user_id', tag.id, current_user.id]
+      
+      TagSharing.create(options)
+      TagSharing.find(:all, :conditions=>conds, :group=>'user_id').each do |us| 
+        TagSharing.create(options.update({:user_id=>us.user_id}))
+      end
     end
-    current_user.tag_sharings.reload
     render :update do |page| 
        page << "$j('#tags_#{idea.id}').show();"
        page.replace_html "tags_#{idea.id}", :partial=>"tags", :locals=>{:tag_sharings=>idea.tag_sharings_for_user(current_user), :idea=>idea}
