@@ -1,12 +1,12 @@
-<%=image_tag('tag.png', :class=>"tag_image") if tags.length > 0%>
+<%=image_tag('tag.png', :class=>"tag_image") if tag_sharings.length > 0%>
 <%=
  idea ||= nil
  search_url ||= false
  sharings ||= false
  
- tags.collect {|tag| 
-		res = link_to(tag.tag.name, (!idea.nil? || search_url) ? tags_filter_path(tag.tag_id) : tag_toggle_uri(tag.tag_id), {:style=>tag.tag.style} )
-    res << link_to_remote(image_tag('del_tag.gif'), :url=>delete_tag_path(:tag_id=>tag.tag_id, :idea_id=>idea.id), :confirm=>"Sure?"[:sure_]) if (tag.user==current_user && idea)
+ tag_sharings.collect {|ts| 
+		res = link_to(ts.tag.name, (!idea.nil? || search_url) ? tags_filter_path(ts.tag_id) : tag_toggle_uri(ts.tag_id), {:style=>ts.style} )
+        res << link_to_remote(image_tag('del_tag.gif'), :url=>delete_tag_path(:tag_id=>ts.tag_id, :idea_id=>idea.id), :confirm=>"Sure?"[:sure_]) if (ts.owner_id==current_user.id && idea)
 	  res
 	}.join(", ")
 %>

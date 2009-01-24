@@ -26,8 +26,8 @@
       </div>
     </div>
   <%end%>
-  
-    <div class='tags' id="tags_<%=idea.id%>" <%if idea.visible_tags_for(current_user).length == 0%>style="display:none;"<%end%>>
-        <%=render :partial=>'ideas/tags', :locals=>{:tags=>idea.visible_tags_for(current_user), :idea=>idea}%>
+  	<%user_idea_tags = idea.tag_sharings_for_user(current_user)%>
+    <div class='tags' id="tags_<%=idea.id%>" <%if user_idea_tags.length == 0%>style="display:none;"<%end%>>
+        <%=render :partial=>'ideas/tags', :locals=>{:tag_sharings=>user_idea_tags, :idea=>idea}%>
    </div>
 </div>

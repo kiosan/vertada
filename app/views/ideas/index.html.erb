@@ -10,7 +10,7 @@
 
       			<b><%="Shared tags for you:"%></b><br/>
             <small class="hint"><%="Click on tag to view shared ideas."%></small><br/>
-      			<%=render :partial=>"tags", :locals=>{:tags=>@shared_tags, :search_url=>true}%>    
+      			<%=render :partial=>"tags", :locals=>{:tag_sharings=>@shared_tags, :search_url=>true}%>    
 
       	<%end%>
       </td>  

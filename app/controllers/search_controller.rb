@@ -5,21 +5,21 @@ class SearchController < ApplicationController
     @tags = Tag.find(@tag_ids)
     
     
-    joins = @tag_ids.collect{|id| "INNER JOIN idea_tags it_#{id} ON it_#{id}.idea_id = ideas.id AND it_#{id}.tag_id = #{id} 
-                                   INNER JOIN tag_sharings AS ts_#{id} ON ts_#{id}.user_id = #{current_user.id} AND ts_#{id}.tag_id = #{id}" }.join(" ")
+    joins = @tag_ids.collect{|id| 
+      tag_join = "INNER JOIN tag_sharings ts_#{id} ON ideas.id = ts_#{id}.idea_id AND ts_#{id}.user_id = %d AND ts_#{id}.tag_id = %d"
+      tag_join % [current_user.id, id]
+    }.join(" ")
+    @ideas = Idea.find(:all, :joins=>joins, :group=>'ideas.id', :include=>[:tag_sharings], :order=>"ideas.created_at DESC")
     
-    select = "ideas.*"
-
-    @ideas = Idea.find(:all, :select=>select, :joins=>joins, :include=>[:idea_tags], :group=>'ideas.id', :order=>"ideas.created_at DESC")
-    related_tags = []
     @related_tags = []
-    @ideas.each{|t| related_tags += t.visible_tags_for(current_user) }
-    related_tags.each do |t|
-      @related_tags << t.tag unless @tags.include?(t.tag)
+    @ideas.each do |idea| 
+      tags = idea.tag_sharings_for_user(current_user).collect{|ts| ts.tag}
+      tags.delete_if{|t| @tags.include?(t)}
+      @related_tags += tags
     end
     @related_tags.uniq!
     
-    @ideas = Idea.paginate(:all, :page =>params[:page], :per_page=>10,:select=>select, :joins=>joins, :include=>[:idea_tags], :group=>'ideas.id', :order=>"ideas.created_at DESC")
+    @ideas = Idea.paginate(:page=>params[:page], :joins=>joins, :group=>'ideas.id', :include=>[:tag_sharings], :order=>"ideas.created_at DESC")
   end
   
 end

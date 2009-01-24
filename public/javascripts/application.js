@@ -35,12 +35,16 @@ function show_loader(container_id, image )
 }
 
  function show_delete_link(id){
-   if (!$('delete_' + id).hasClassName("edit")){
-     $('delete_' + id).show();
-   }
+ 	var obj = $('delete_' + id);
+ 	if(!obj) return
+    if (!obj.hasClassName("edit")){
+      obj.show();
+    }
  }
  function hide_delete_link(id){
-   $('delete_' + id).hide();
+ 	var obj = $('delete_' + id);
+ 	if(!obj) return
+   	obj.hide();
  }
  
 var Idea = 

@@ -1,7 +1,7 @@
 class Idea < ActiveRecord::Base
   has_many :files, :class_name=>'FsFile'
   belongs_to :user
-  has_many :idea_tags
+  has_many :tag_sharings
   
   validates_presence_of     :body
   
@@ -11,8 +11,8 @@ class Idea < ActiveRecord::Base
     []
   end
   
-  def visible_tags_for(user)
-    self.idea_tags
+  def tag_sharings_for_user(user)
+    self.tag_sharings.select{|ts| ts.user_id == user.id} || []
   end
   
 end
