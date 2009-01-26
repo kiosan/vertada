@@ -61,39 +61,39 @@ class String
 end
 
 module LocalizeExt
-	module TimeFormat
-		private
-		L_MONTHNAMES = "January February March April May June July August September October November December"
-	  L_DAYNAMES = "Sunday Monday Tuesday Wednesday Thursday Friday Saturday"
-	  L_ABBR_MONTHNAMES = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec"
-	  L_ABBR_DAYNAMES = "Sun Mon Tue Wed Thu Fri Sat"
-	  
-	  @@translate_cache = {}
+  module TimeFormat
+    private
+    L_MONTHNAMES = "January February March April May June July August September October November December"
+    L_DAYNAMES = "Sunday Monday Tuesday Wednesday Thursday Friday Saturday"
+    L_ABBR_MONTHNAMES = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec"
+    L_ABBR_DAYNAMES = "Sun Mon Tue Wed Thu Fri Sat"
+    
+    @@translate_cache = {}
     public
-	  def self.start(language)
-	  	hash = {
-	  		:MONTHNAMES => LocalizeExt::Helper.translate_caller(nil, "time", :MONTHNAMES, language, L_MONTHNAMES),
-		  	:DAYNAMES => LocalizeExt::Helper.translate_caller(nil, "time", :DAYNAMES, language, L_DAYNAMES),
-	  		:ABBR_MONTHNAMES => LocalizeExt::Helper.translate_caller(nil, "time", :ABBR_MONTHNAMES, language, L_ABBR_MONTHNAMES),
-	  		:ABBR_DAYNAMES => LocalizeExt::Helper.translate_caller(nil, "time", :ABBR_DAYNAMES, language, L_ABBR_DAYNAMES)
-	  	}
-	  	hash.each {|key, value| 
-	  		@@translate_cache[key] = eval("%w(" + value +")") 
-	  	}
-	  end
-	  
-    def self.translate(group, index)
-	  	return @@translate_cache[group][index]
-	  end
+    def self.start(language)
+      hash = {
+        :MONTHNAMES => LocalizeExt::Helper.translate_caller(nil, "time", :MONTHNAMES, language, L_MONTHNAMES),
+        :DAYNAMES => LocalizeExt::Helper.translate_caller(nil, "time", :DAYNAMES, language, L_DAYNAMES),
+        :ABBR_MONTHNAMES => LocalizeExt::Helper.translate_caller(nil, "time", :ABBR_MONTHNAMES, language, L_ABBR_MONTHNAMES),
+        :ABBR_DAYNAMES => LocalizeExt::Helper.translate_caller(nil, "time", :ABBR_DAYNAMES, language, L_ABBR_DAYNAMES)
+      }
+      hash.each {|key, value| 
+        @@translate_cache[key] = eval("%w(" + value +")") 
+      }
+    end
+    
+    def self.translate_with_localize_ext(group, index)
+      return @@translate_cache[group][index]
+    end
     
     def self.has_translation?()
       return !@@translate_cache.empty?
     end
-	end
-end	
+  end
+end 
 
 class Time
-	def emit(e, f) # :nodoc:
+  def emit(e, f) # :nodoc:
     case e
     when Numeric
       sign = %w(+ + -)[e <=> 0]
@@ -132,26 +132,26 @@ class Time
     f[:w] = [f[:w], w].compact.max
     emit(e, f)
   end
-	private :emit, :emit_ad
-	
-	include LocalizeExt::TimeFormat
-	#alias_method :lz_strftime, :strftime
-	def strftime_with_localize_ext(fmt)
+  private :emit, :emit_ad
+  
+  include LocalizeExt::TimeFormat
+  #alias_method :lz_strftime, :strftime
+  def strftime_with_localize_ext(fmt)
    return strftime_without_localize_ext(fmt) unless LocalizeExt::TimeFormat.has_translation? 
    fmt.gsub(/%([-_0^#]+)?(\d+)?[EO]?(:{1,3}z|.)/m) do |m|
-			f = {}
-			s, w, c = $1, $2, $3
-			if ['A', 'a', 'B', 'b'].include?(c)
-				case c
-					when 'A'; emit_ad(LocalizeExt::TimeFormat.translate(:DAYNAMES, wday), 0, f)
-					when 'a'; emit_ad(LocalizeExt::TimeFormat.translate(:ABBR_DAYNAMES, wday), 0, f)
-					when 'B'; emit_ad(LocalizeExt::TimeFormat.translate(:MONTHNAMES, mon - 1), 0, f)
-					when 'b'; emit_ad(LocalizeExt::TimeFormat.translate(:ABBR_MONTHNAMES, mon - 1), 0, f)
-				end
-			else
-				emit_ad(strftime_without_localize_ext(m), 0, f)
-			end
-		end
+      f = {}
+      s, w, c = $1, $2, $3
+      if ['A', 'a', 'B', 'b'].include?(c)
+        case c
+          when 'A'; emit_ad(LocalizeExt::TimeFormat.translate_with_localize_ext(:DAYNAMES, wday), 0, f)
+          when 'a'; emit_ad(LocalizeExt::TimeFormat.translate_with_localize_ext(:ABBR_DAYNAMES, wday), 0, f)
+          when 'B'; emit_ad(LocalizeExt::TimeFormat.translate_with_localize_ext(:MONTHNAMES, mon - 1), 0, f)
+          when 'b'; emit_ad(LocalizeExt::TimeFormat.translate_with_localize_ext(:ABBR_MONTHNAMES, mon - 1), 0, f)
+        end
+      else
+        emit_ad(strftime_without_localize_ext(m), 0, f)
+      end
+    end
   end
   alias_method_chain :strftime, :localize_ext
 end
