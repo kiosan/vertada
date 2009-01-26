@@ -8,4 +8,11 @@ module ActiveRecord
       alias_method_chain :human_attribute_name, :localize_ext
     end
   end
+  class Errors
+    # Anti rails 2.2.2 hack
+    def generate_message(attribute, message = :invalid, options = {})
+      return options[:default] if options[:default]
+      message
+    end
+  end
 end
