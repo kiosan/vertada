@@ -16,12 +16,8 @@ class SharingsController < ApplicationController
     user = User.find(:first, :conditions=>['login = ? OR email = ?', params[:user_for_share], params[:user_for_share]])
     return unless tag && user
     
-    options = {:tag => tag, :user_id => user.id, :owner_id => current_user.id, :idea_id=>nil}
-    conds = ['tag_id = ? AND owner_id = ?', tag.id, current_user.id]
-    TagSharing.find(:all, :conditions=>conds, :group=>'idea_id').each do |idea_share| 
-      TagSharing.create(options.update({:idea_id=>idea_share.idea_id}))
-    end
-    
+    #conds = ['tag_id = ? AND owner_id = ?', tag.id, current_user.id]
+    TagSharing.create({:tag => tag, :user_id => user.id, :owner_id => current_user.id})
     render :nothing=>true
   end
   
@@ -31,11 +27,5 @@ class SharingsController < ApplicationController
   
   private 
   
-  def group_by(enum)
-    result = []
-    enum.each do |value|
-      result << value unless result.find {|val| yield(val) == yield(value)}
-    end
-    result
-  end
+ 
 end

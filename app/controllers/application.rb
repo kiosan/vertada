@@ -13,7 +13,14 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   self.allow_forgery_protection = false
   #protect_from_forgery # :secret => CONFIG[:secret_protect_from_forgery]
-
+  
+  def group_by(enum)
+    result = []
+    enum.each do |value|
+      result << value unless result.find {|val| yield(val) == yield(value)}
+    end
+    result
+  end
 end
 
 
@@ -63,4 +70,6 @@ class FManager
     end
     []
   end
+  
+  
 end

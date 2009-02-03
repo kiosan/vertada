@@ -8,10 +8,14 @@ class SearchController < ApplicationController
     @tags = current_user.tag_sharings.find(:all, :conditions=>conditions, :group=>'tag_id')
     
     joins = @tag_ids.collect{|id| 
-      tag_join = "INNER JOIN tag_sharings ts_#{id} ON ideas.id = ts_#{id}.idea_id AND ts_#{id}.user_id = %d AND ts_#{id}.tag_id = %d"
-      tag_join % [current_user.id, id]
+      tag_join = 
+        "INNER JOIN idea_tags @it ON  @it.idea_id = ideas.id AND  @it.tag_id = %d
+         INNER JOIN tag_sharings @ts ON @it.user_id = @ts.owner_id AND @ts.tag_id = %d AND @ts.user_id = %d"
+      tag_join.gsub!("@it", "it_#{id}")
+      tag_join.gsub!("@ts", "ts_#{id}")
+      tag_join % [id, id, current_user.id]
     }.join(" ")
-    @ideas = Idea.find(:all, :joins=>joins, :group=>'ideas.id', :include=>[:tag_sharings], :order=>"ideas.created_at DESC")
+    @ideas = Idea.find(:all, :joins=>joins, :group=>'ideas.id', :order=>"ideas.created_at DESC")
     
     @related_tags = []
     @ideas.each do |idea| 
@@ -21,7 +25,7 @@ class SearchController < ApplicationController
     end
     @related_tags.uniq!
     
-    @ideas = Idea.paginate(:page=>params[:page], :joins=>joins, :group=>'ideas.id', :include=>[:tag_sharings], :order=>"ideas.created_at DESC")
+    @ideas = Idea.paginate(:page=>params[:page], :joins=>joins, :group=>'ideas.id', :order=>"ideas.created_at DESC")
   end
   
 end

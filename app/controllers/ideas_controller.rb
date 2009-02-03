@@ -5,7 +5,8 @@ class IdeasController < ApplicationController
   def index
     @shared_tags = current_user.tag_sharings.find(:all, :conditions=>["owner_id != user_id"])
     
-    joins = "LEFT JOIN tag_sharings ON ideas.id = tag_sharings.idea_id"
+    joins = "LEFT JOIN idea_tags ON idea_tags.idea_id = ideas.id
+             LEFT JOIN tag_sharings ON tag_sharings.owner_id = idea_tags.user_id AND idea_tags.tag_id = tag_sharings.tag_id"
     conditions =  "(tag_sharings.user_id = #{current_user.id} OR ideas.user_id = #{current_user.id})"
     @ideas = Idea.paginate(:page=>params[:page], :joins=>joins, :conditions=>conditions, :order=>"created_at DESC", :group=>'ideas.id')
   end
@@ -23,11 +24,8 @@ class IdeasController < ApplicationController
     render :update do |page|
         idea_id = 'new_idea'
         if @idea.save
-          
-          
           FManager.clear_for_post(session, nil)
-          
-          
+         
           page.replace_html "uploaded_files", :partial=>"uploaded_files", :locals=>{:files=>[]} 
           
           page << 'if($("errorExplanation"))Element.hide("errorExplanation");'
@@ -151,14 +149,10 @@ class IdeasController < ApplicationController
     end
     tags.each do |tag_ttl|    
       tag = Tag.find(:first, :conditions=>["name=?",tag_ttl]) || Tag.create(:name=>tag_ttl)
+      IdeaTag.create({:tag => tag, :user_id => current_user.id, :idea_id=>idea.id})
       
-      options = {:tag => tag, :user_id => current_user.id, :owner_id => current_user.id, :idea_id=>idea.id}
-      conds = ['tag_id = ? AND owner_id = ? AND owner_id != user_id', tag.id, current_user.id]
-      
-      TagSharing.create(options)
-      TagSharing.find(:all, :conditions=>conds, :group=>'user_id').each do |us| 
-        TagSharing.create(options.update({:user_id=>us.user_id}))
-      end
+      ts = TagSharing.find(:first, :conditions=>["tag_id = ? AND owner_id = ? AND owner_id = user_id", tag.id, current_user.id])
+      TagSharing.create({:tag => tag, :user_id => current_user.id, :owner_id => current_user.id}) unless ts
     end
     render :update do |page| 
        page << "$j('#tags_#{idea.id}').show();"
@@ -169,8 +163,8 @@ class IdeasController < ApplicationController
   
   def delete_tag
     idea = Idea.find_by_id(params[:idea_id])
-   
-    TagSharing.delete_all(["idea_id=? and tag_id=? and owner_id=?", params[:idea_id], params[:tag_id], current_user.id])
+    IdeaTag.delete_all(["tag_id=? and user_id=? AND idea_id=?", params[:tag_id], current_user.id, idea.id])
+    
     render :update do |page| 
       page.replace_html "tags_#{idea.id}", :partial=>"tags", :locals=>{:tag_sharings=>idea.tag_sharings_for_user(current_user), :idea=>idea}
       page.replace_html "add_tags_#{idea.id}", :partial=>"ideas/add_tags", :locals=>{:idea=>idea}
