@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090114122659) do
+ActiveRecord::Schema.define(:version => 20090124142759) do
 
   create_table "fs_files", :force => true do |t|
     t.string   "file_name"
@@ -25,10 +25,10 @@ ActiveRecord::Schema.define(:version => 20090114122659) do
 
   create_table "ideas", :force => true do |t|
     t.text     "body"
-    t.string   "tags"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "client"
   end
 
   create_table "roles", :force => true do |t|
@@ -42,6 +42,21 @@ ActiveRecord::Schema.define(:version => 20090114122659) do
 
   add_index "roles_users", ["role_id"], :name => "index_roles_users_on_role_id"
   add_index "roles_users", ["user_id"], :name => "index_roles_users_on_user_id"
+
+  create_table "tag_sharings", :force => true do |t|
+    t.integer "user_id"
+    t.integer "owner_id"
+    t.boolean "show_in_top"
+    t.string  "style"
+    t.integer "tag_id"
+    t.integer "idea_id"
+    t.boolean "public",      :default => false
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string "name"
+    t.string "style"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "login",                     :limit => 40
