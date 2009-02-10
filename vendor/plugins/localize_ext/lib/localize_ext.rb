@@ -141,6 +141,10 @@ module LocalizeExt
 		end
   end
   
+  def self.current_language
+    Helper.current_language
+  end
+  
   module LanguageRules
     module Extensions
       
