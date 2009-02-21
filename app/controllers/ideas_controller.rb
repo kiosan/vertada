@@ -1,6 +1,6 @@
 class IdeasController < ApplicationController
   
-  before_filter :login_required
+  before_filter :login_required 
   
   def index
     @shared_tags = current_user.tag_sharings.find(:all, :conditions=>["owner_id != user_id"])
@@ -14,36 +14,44 @@ class IdeasController < ApplicationController
   def create
     @idea = Idea.new(params[:idea])
     @idea.user_id = current_user.id
+    success = false
     if @idea.save
       FManager.files_for_post(session, nil).each do |file|
         f = FsFile.find(file[:id])
         f.idea_id = @idea.id
         f.save
       end
+      success = true
     end
-    render :update do |page|
-        idea_id = 'new_idea'
-        if @idea.save
-          FManager.clear_for_post(session, nil)
-         
-          page.replace_html "uploaded_files", :partial=>"uploaded_files", :locals=>{:files=>[]} 
-          
-          page << 'if($("errorExplanation"))Element.hide("errorExplanation");'
-          flash.now[:success] = "Idea saved. Now you have place for one more ;)"
-          #Insert new row on same page
-            page.replace_html  'idea_place', render(:partial => 'ideas/idea', :locals=>{:idea=>@idea})
-            page.replace_html  'add_idea_place', render(:partial => 'ideas/quick_add', :locals=>{:idea=>Idea.new})
-            page.replace_html  'flash', flash_helper
-            page << "$j('#add_idea_place').effect(\"highlight\", {}, 300);" 
 
-            page[:new_idea].value = ''
-        else
-          #display error
-          page.replace_html  "add_idea_place", render(:partial => 'ideas/quick_add', :locals=>{:idea=>@idea})
-          page << "$j('#add_idea_place').effect(\"highlight\", {}, 300);" 
-        end
-      
+    respond_to do |format|
+      format.html do
+         render :update do |page|
+            #idea_id = 'new_idea'
+            if success
+              FManager.clear_for_post(session, nil)
+
+              page.replace_html "uploaded_files", :partial=>"uploaded_files", :locals=>{:files=>[]}
+
+              page << 'if($("errorExplanation"))Element.hide("errorExplanation");'
+              flash.now[:success] = "Idea saved. Now you have place for one more ;)"
+              #Insert new row on same page
+                page.replace_html  'idea_place', render(:partial => 'ideas/idea', :locals=>{:idea=>@idea})
+                page.replace_html  'add_idea_place', render(:partial => 'ideas/quick_add', :locals=>{:idea=>Idea.new})
+                page.replace_html  'flash', flash_helper
+                page << "$j('#add_idea_place').effect(\"highlight\", {}, 300);"
+
+                page[:new_idea].value = ''
+            else
+              #display error
+              page.replace_html  "add_idea_place", render(:partial => 'ideas/quick_add', :locals=>{:idea=>@idea})
+              page << "$j('#add_idea_place').effect(\"highlight\", {}, 300);"
+            end
+          end
+      end
+      format.xml { @success = success }
     end
+   
   end
   
   def edit
