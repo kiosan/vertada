@@ -3,7 +3,7 @@ class IdeasController < ApplicationController
   before_filter :login_required 
   
   def index
-    @shared_tags = current_user.tag_sharings.find(:all, :conditions=>["owner_id != user_id"])
+    @shared_tags = current_user.tag_sharings.find(:all, :conditions=>["owner_id != user_id"], :group=>'tag_id')
     
     joins = "LEFT JOIN idea_tags ON idea_tags.idea_id = ideas.id
              LEFT JOIN tag_sharings ON tag_sharings.owner_id = idea_tags.user_id AND idea_tags.tag_id = tag_sharings.tag_id"
