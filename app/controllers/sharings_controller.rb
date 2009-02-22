@@ -16,13 +16,22 @@ class SharingsController < ApplicationController
     user = User.find(:first, :conditions=>['login = ? OR email = ?', params[:user_for_share], params[:user_for_share]])
     return unless tag && user
     
-    #conds = ['tag_id = ? AND owner_id = ?', tag.id, current_user.id]
-    TagSharing.create({:tag => tag, :user_id => user.id, :owner_id => current_user.id})
-    render :nothing=>true
+    if !(TagSharing.find(:first, :conditions=>['tag_id = ? AND user_id = ? AND owner_id = ?', tag.id, user.id, current_user.id]))
+      share = TagSharing.create({:tag => tag, :user_id => user.id, :owner_id => current_user.id})
+      render :update do |page|
+        page.replace_html("my_shares", render(:partial=>"my_share", :locals=>{:share=>share}))
+      end
+      
+    else
+      render :nothing=>true
+    end
   end
   
   def destroy
-    
+    TagSharing.destroy(params[:id])
+    render :update do |page|
+      page.remove('share_' + params[:id])
+    end
   end
   
   private 

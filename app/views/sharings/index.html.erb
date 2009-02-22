@@ -6,29 +6,22 @@
 	       	<h2>Shares for me</h2>
 			<div class="sharing_list">
 				<%@sharings_to_me.each do |share|%>
-				<div class="share">
-					<span class="share_user"><%=share.owner.login%></span>
-					 shared 
-					 <span class="share_tag"><%=share.tag.name%></span> with me
-					 <input type="button" value="Decline" >
-				</div>
+                  <% form_remote_tag(:url => sharing_path(share), :method=>'DELETE') do%>
+                  <div class="share" id="share_<%=share.id%>">
+                    <span class="share_user"><%=share.owner.login%></span>
+                       shared
+                       <span class="share_tag"><%=share.tag.name%></span> with me
+                       <input type="submit" value="Decline" >
+                  </div>
+                  <%end%>
 				<%end%>
 			</div>
       </td>
 	   <td width="50%">
 	       	<h2>My shares </h2>
-			<div class="sharing_list">
+			<div class="sharing_list" id="my_shares">
 				<%@sharings_by_me.each do |share|%>
-					<% form_remote_tag(:url => sharings_path, :method=>'DELETE') do%>
-					<div class="share">
-						I shared  
-						<span class="share_tag"><%=share.tag.name%></span> 
-						with
-						<span class="share_user"><%=share.user.login%></span>
-						<input type="submit" value="Decline" >
-						
-					</div>
-					<%end%>
+					<%=render :partial=>"my_share", :locals=>{:share=>share} %>
 				<%end%>
 			</div>
     	</td>
