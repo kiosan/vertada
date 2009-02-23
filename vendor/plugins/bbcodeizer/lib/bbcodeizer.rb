@@ -134,7 +134,9 @@ module BBCodeizer
     
     def video(string)
       
-      videos = {:youtube=>'<object width="425" height="355"><param name="movie" value="<url>"></param><param name="wmode" value="transparent"></param><embed src="<url>" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed></object>'}
+      videos = {:youtube=>'<object width="425" height="355"><param name="movie" value="<url>"></param><param name="wmode" value="transparent"></param><embed src="<url>" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed></object>',
+        :vimeo=>'<object width="400" height="302"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=<id>&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id=<id>&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="302"></embed></object>'
+      }
       res = string.scan(/\[video=(.+?)\](.+?)\[\/video\]/i)
       if res && res.length > 0
         # search
@@ -145,9 +147,17 @@ module BBCodeizer
         if res[0][0] == 'youtube' 
           url = res[0][1].scan(/v=([-0-9A-Za-z_]+?)$/i)
         end
-        if url
+        if res[0][0] == 'vimeo'
+          id = res[0][1].scan(/vimeo.com\/([-0-9A-Za-z_]+?)$/i)
+        end
+        if url 
           rep_str = videos[:youtube].gsub('<url>', "http://www.youtube.com/v/#{url}")
         end
+
+        if id
+          rep_str = videos[:vimeo].gsub('<id>', "#{id}")
+        end
+
         string.gsub!(/\[video=(.+?)\](.+?)\[\/video\]/i, rep_str)
       end
     end

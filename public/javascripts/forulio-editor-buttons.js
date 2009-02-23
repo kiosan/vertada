@@ -133,7 +133,7 @@ var ForulioEditorInsertVideoButton = Class.create(ForulioEditorPopupButton,
 			cellSpacing = 0,
 			border = 0
 		}
-		var services = [ {name:'youtube', url:'http://www.youtube.com/watch?v=<video id>'} ];
+		var services = [ {name:'youtube', url:'http://www.youtube.com/watch?v=<video id>'}, {name:'vimeo', url:'http://www.vimeo.com/<video id>'} ];
 		var me = this;
 		services.each(function(serv){
 			var tr = table.insertRow(table.rows.length);
