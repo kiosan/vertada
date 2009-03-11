@@ -16,5 +16,4 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-config.action_mailer.delivery_method = CONFIG[:delivery_method].to_sym
-config.action_mailer.smtp_settings = CONFIG[:smtp_settings].symbolize_keys
+config.action_mailer.delivery_method = :test

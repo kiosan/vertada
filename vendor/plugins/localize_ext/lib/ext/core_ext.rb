@@ -17,17 +17,21 @@ class Symbol
    
    def %(*arguments)
      return self.lz_to_s % arguments if @lz_caller.nil?
-     t2 % arguments
+     translate_internal % arguments
    end
    
    def to_s_with_localize_ext
      return to_s_without_localize_ext if @lz_caller.nil?
-     t2
+     translate_internal
    end
    alias_method_chain :to_s, :localize_ext
-   
-   protected
-   def t2
+
+   def is_localized_symbol?
+     !@lz_caller.nil?
+   end
+
+   private
+   def translate_internal
      key = self
      #avoid recursion when calling not own methods
      lz_caller, lz_default= @lz_caller, @lz_default
@@ -54,7 +58,7 @@ class String
   end
   
   def +(value)
-    return plus(value.to_s) if !value.nil? and value.is_a?(Symbol)
+    return plus_without_localize_ext(value.to_s) if value.is_a?(Symbol) && value.is_localized_symbol?
     plus_without_localize_ext(value) 
   end
   

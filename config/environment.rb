@@ -78,7 +78,7 @@ end
 
 
 LocalizeExt.enable_auto_create = false
-require 'rails_hack.rb'
+#require 'rails_hack.rb'
 
 
 

@@ -10,6 +10,17 @@ module ActionView
   end
     
   module Helpers
+    # rewrite error messages
+    module ActiveRecordHelper
+      def error_messages_for_with_localize_ext(*params)
+        options = params.extract_options!.symbolize_keys
+        options[:header_message] = 'Following errors occured during last submit'[:active_record_error_header]
+        options[:message] = ""[:active_record_error_message]
+        params.push(options)
+        error_messages_for_without_localize_ext(*params)
+      end
+      alias_method_chain :error_messages_for, :localize_ext
+    end
     # Rewrite Pluralize
     module TextHelper
       
@@ -74,4 +85,7 @@ module ActionView
       end
     end
   end
+  module ActionView::Helpers::ActiveRecordHelper
+end
+
 end
