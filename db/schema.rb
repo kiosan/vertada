@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090124142759) do
+ActiveRecord::Schema.define(:version => 20090127145415) do
 
   create_table "fs_files", :force => true do |t|
     t.string   "file_name"
@@ -23,12 +23,18 @@ ActiveRecord::Schema.define(:version => 20090124142759) do
     t.datetime "updated_at"
   end
 
+  create_table "idea_tags", :force => true do |t|
+    t.integer "tag_id"
+    t.integer "idea_id"
+    t.integer "user_id"
+  end
+
   create_table "ideas", :force => true do |t|
     t.text     "body"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "client"
+    t.string   "client",     :default => "web"
   end
 
   create_table "roles", :force => true do |t|
@@ -46,10 +52,9 @@ ActiveRecord::Schema.define(:version => 20090124142759) do
   create_table "tag_sharings", :force => true do |t|
     t.integer "user_id"
     t.integer "owner_id"
+    t.integer "tag_id"
     t.boolean "show_in_top"
     t.string  "style"
-    t.integer "tag_id"
-    t.integer "idea_id"
     t.boolean "public",      :default => false
   end
 
