@@ -1,0 +1,20 @@
+development:
+  adapter: mysql
+  database: vertada
+  username: root
+  password: 
+  encoding: utf8
+ 
+test:
+  adapter: mysql
+  database: funda_test
+  username: root
+  password: 
+  encoding: utf8
+
+production:
+  adapter: mysql
+  database: vertada
+  username: root
+  password: 
+  encoding: utf8

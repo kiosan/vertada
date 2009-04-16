@@ -1,0 +1,24 @@
+--- 
+development: 
+  site_url: http://localhost:3000
+  session_domain: localhost
+  admin_email: donotrepy@dovadi.com
+  delivery_method: test
+  site_domain: localhost
+global: 
+  send_activation_password: false
+  site_title: Vertada
+  no_activation_for_first_user: true
+  rest_auth_site_key: 09de58a4862fb9b1af4d66a26e34ec2a
+  secret_for_sessions:  a89a1fbfe8ad7caa16a8c1c226a92f594c317fde9146dca9eb26722105594cfd64aa2286979cacf5d44b2cc342de86c4cb65b9783fb27ff8714fffcd05e1bd49
+  redirect_to_login_when_no_access: true
+test: 
+  site_url: http://test.host
+  session_domain: localhost
+  site_domain: localhost
+  redirect_to_login_when_no_access: true
+production: 
+  site_url: http://www.example.com
+  session_domain: example.com
+  admin_email: donotrepy@example.com
+  site_domain: example.com
