@@ -2,7 +2,7 @@ development:
   adapter: mysql
   database: vertada
   username: root
-  password: atrac
+  password: 
   encoding: utf8
  
 test:
@@ -16,5 +16,5 @@ production:
   adapter: mysql
   database: vertada
   username: root
-  password: atrac
+  password: 
   encoding: utf8

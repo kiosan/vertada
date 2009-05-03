@@ -6,3 +6,6 @@ coverage
 config/config.yml
 config/selenium.yml
 tmp
+
+/.htaccess
+/config/database.yml

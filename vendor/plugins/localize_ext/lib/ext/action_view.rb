@@ -14,8 +14,12 @@ module ActionView
     module ActiveRecordHelper
       def error_messages_for_with_localize_ext(*params)
         options = params.extract_options!.symbolize_keys
-        options[:header_message] = 'Following errors occured during last submit'[:active_record_error_header]
-        options[:message] = ""[:active_record_error_message]
+
+        header_message = ''[:active_record_error_header]
+        message =        ''[:active_record_error_message]
+        options[:header_message] = header_message unless header_message.empty?
+        options[:message] = message unless message.empty?
+
         params.push(options)
         error_messages_for_without_localize_ext(*params)
       end
@@ -85,7 +89,4 @@ module ActionView
       end
     end
   end
-  module ActionView::Helpers::ActiveRecordHelper
-end
-
 end
