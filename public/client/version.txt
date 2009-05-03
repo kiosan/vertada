@@ -1,0 +1,3 @@
+﻿1.1.0.0
+Updated to new site version. 
+Support for xml response from server.
